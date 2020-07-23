@@ -1,7 +1,8 @@
 
 ### BUILD PHASE
-#tag to call it builder
-FROM node:alpine as builder
+#tag to call it builder, jk there is bug in AWS cant used named tags
+#FROM node:alpine as builder
+FROM node:alpine
 WORKDIR '/app'
 COPY package.json .
 RUN npm install
@@ -12,4 +13,4 @@ RUN npm run build
 FROM nginx
 #for AWS elastic beanstalk to map port
 EXPOSE 80
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=0 /app/build /usr/share/nginx/html
