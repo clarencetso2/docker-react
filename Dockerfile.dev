@@ -1,0 +1,15 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+
+RUN npm install
+
+#put a reference to local folders into docker container
+#that way changes made to app.js is immediately changed in container
+#use DOCKER VOLUMES
+
+COPY . .
+
+CMD ["npm", "run", "start"]
