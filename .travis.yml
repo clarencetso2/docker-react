@@ -9,3 +9,16 @@ before_install:
 
 script: #make sure test suite runs and exits (so it doesnt hang waiting for input)
   - docker run -e CI=true ctso2/docker-react npm run test
+
+#after test passes, deploy to AWS
+deploy:
+  provider: elsaticbeanstalk #using elastic beanstalk instructions to deploy
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env-1"
+  bucket_name: "elasticbeanstalk-us-east-2-604389414674"
+  bucket_path: "docker-react"
+  on:
+    branch: master #only deploy when stuff is commited to MASTER branch
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
